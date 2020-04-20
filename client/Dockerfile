@@ -1,8 +1,10 @@
 FROM node:current-slim
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app-client
 
+
+RUN yarn global add serve
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
@@ -13,7 +15,9 @@ RUN yarn
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY . ./
 
-EXPOSE 8080
-CMD [ "node", "dist/app.js" ]
+RUN yarn build
+
+EXPOSE 5000
+CMD [ "serve", "-s","build" ]
