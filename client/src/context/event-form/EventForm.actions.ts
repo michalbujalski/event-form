@@ -45,7 +45,7 @@ export const createActions = (
   },
   updateForm: (updatedForm: EventFormData) => {
     dispatch({
-      type: EventFormActionsType.UPDATE_EVENT_FORM,
+      type: EventFormActionsType.EVENT_FORM_UPDATE,
       payload: updatedForm,
     });
   },

@@ -6,9 +6,44 @@ jest.mock("../../api");
 describe("Event form actions", () => {
   let dispatch;
   let actions;
-  beforeAll(() => {
+  beforeEach(() => {
     dispatch = jest.fn();
     actions = createActions(dispatch);
+  });
+  describe("updateTouched", () => {
+    it("should update touched when called", () => {
+      // given
+      const updatedTouched = {
+        firstName: false,
+        lastName: true,
+        email: false,
+      };
+      // when
+      actions.updateTouched(updatedTouched);
+      // then
+      expect(dispatch).toBeCalledWith({
+        type: EventFormActionsType.EVENT_FORM_TOUCHED_UPDATE,
+        payload: updatedTouched,
+      });
+    });
+  });
+  describe("updateForm", () => {
+    it("updates form when called", () => {
+      // given
+      const form = {
+        firstName: "firstName",
+        lastName: "lastName",
+        email: "ccc@ddd.eee",
+        date: new Date(),
+      };
+      // when
+      actions.updateForm(form);
+      // then
+      expect(dispatch).toBeCalledWith({
+        type: EventFormActionsType.EVENT_FORM_UPDATE,
+        payload: form,
+      });
+    });
   });
   describe("submit", () => {
     it("handle create event success", async () => {

@@ -25,7 +25,7 @@ export default (
     case EventFormActionsType.EVENT_FORM_SUBMIT_FAILURE: {
       return { ...state, isLoading: false, isSuccess: false };
     }
-    case EventFormActionsType.UPDATE_EVENT_FORM: {
+    case EventFormActionsType.EVENT_FORM_UPDATE: {
       return { ...state, data: action.payload };
     }
     case EventFormActionsType.EVENT_FORM_TOUCHED_UPDATE: {

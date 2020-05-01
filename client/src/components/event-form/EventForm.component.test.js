@@ -5,6 +5,7 @@ import { Simulate } from "react-dom/test-utils";
 
 describe("Event form", () => {
   it("does not show errors when form not touched", () => {
+    // given
     const updateTouched = jest.fn();
     const updateForm = jest.fn();
     const form = {
@@ -18,6 +19,7 @@ describe("Event form", () => {
       lastName: false,
       email: false,
     };
+    // when
     const { queryByText } = render(
       <EventForm
         form={form}
@@ -26,6 +28,7 @@ describe("Event form", () => {
         updateTouched={updateTouched}
       />
     );
+    // then
     const emailError = queryByText(/Email must be valid/i);
     expect(emailError).toBeNull();
 
@@ -40,6 +43,7 @@ describe("Event form", () => {
   });
 
   it("renders email error", () => {
+    // given
     const updateTouched = jest.fn();
     const updateForm = jest.fn();
     const form = {
@@ -53,6 +57,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByText } = render(
       <EventForm
         form={form}
@@ -61,10 +66,12 @@ describe("Event form", () => {
         updateTouched={updateTouched}
       />
     );
+    // then
     const element = getByText(/Email must be valid/i);
     expect(element).toBeInTheDocument();
   });
   it("renders first name error", () => {
+    // given
     const updateTouched = jest.fn();
     const updateForm = jest.fn();
     const form = {
@@ -78,6 +85,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByText } = render(
       <EventForm
         form={form}
@@ -86,10 +94,12 @@ describe("Event form", () => {
         updateTouched={updateTouched}
       />
     );
+    // then
     const element = getByText(/First name can't be blank/i);
     expect(element).toBeInTheDocument();
   });
   it("renders last name error", () => {
+    // given
     const updateTouched = jest.fn();
     const updateForm = jest.fn();
     const form = {
@@ -103,6 +113,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByText } = render(
       <EventForm
         form={form}
@@ -111,10 +122,12 @@ describe("Event form", () => {
         updateTouched={updateTouched}
       />
     );
+    // then
     const element = getByText(/Last name can't be blank/i);
     expect(element).toBeInTheDocument();
   });
   it("renders date error", () => {
+    // given
     const updateForm = jest.fn();
     const updateTouched = jest.fn();
     const form = {
@@ -129,6 +142,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByText } = render(
       <EventForm
         form={form}
@@ -137,10 +151,12 @@ describe("Event form", () => {
         updateTouched={updateTouched}
       />
     );
+    // then
     const element = getByText(/Date can't be blank/i);
     expect(element).toBeInTheDocument();
   });
   it("is disabled when submitting", () => {
+    // given
     const updateTouched = jest.fn();
     const updateForm = jest.fn();
     const form = {
@@ -154,6 +170,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByTestId } = render(
       <EventForm
         form={form}
@@ -163,12 +180,14 @@ describe("Event form", () => {
         isLoading={true}
       />
     );
+    // then
     expect(getByTestId("first-name")).toHaveAttribute("disabled");
     expect(getByTestId("last-name")).toHaveAttribute("disabled");
     expect(getByTestId("email")).toHaveAttribute("disabled");
     expect(getByTestId("date")).toHaveAttribute("disabled");
   });
   it("should submit", () => {
+    // given
     const submitForom = jest.fn().mockImplementation(() => {});
     const form = {
       firstName: "First name",
@@ -181,13 +200,16 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const { getByText } = render(
       <EventForm form={form} updateForm={jest.fn()} submitForom={submitForom} />
     );
+    // then
     Simulate.click(getByText("Create"));
     expect(submitForom).toBeCalled();
   });
   it("valid form umatches snapshot", () => {
+    // given
     const submitForom = jest.fn().mockImplementation(() => {});
     const form = {
       firstName: "First name",
@@ -200,6 +222,7 @@ describe("Event form", () => {
       lastName: true,
       email: true,
     };
+    // when
     const component = render(
       <EventForm
         form={form}
@@ -208,6 +231,7 @@ describe("Event form", () => {
         touched={touched}
       />
     );
+    // then
     expect(component).toMatchSnapshot();
   });
 });

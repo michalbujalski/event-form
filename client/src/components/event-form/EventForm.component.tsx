@@ -123,7 +123,7 @@ const EventForm: FC<EventFormProps> = ({
         break;
       }
       default: {
-        throw new Error(`Unknown typ: ${type}`);
+        throw new Error(`Unknown type: ${type}`);
       }
     }
   };
