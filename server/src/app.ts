@@ -2,11 +2,11 @@ import express from "express";
 import bodyParser from "body-parser";
 import eventRoutes from "./events/routes";
 
-const app = express();
+export const app = express();
 
 const loggerMiddleware = (
   req: express.Request,
-  response: express.Response,
+  _response: express.Response,
   next
 ) => {
   console.log(`${req.method} ${req.path}`);
@@ -17,7 +17,7 @@ function errorHandler(err, _req, res, _next) {
   res.status(400).send(JSON.parse(err));
 }
 
-const port = 3001;
+const port = 3000;
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -30,7 +30,7 @@ app.use("/events", eventRoutes);
 
 app.use(errorHandler);
 
-app.listen(port, (err) => {
+export const server = app.listen(port, (err) => {
   if (err) {
     return console.error(err);
   }

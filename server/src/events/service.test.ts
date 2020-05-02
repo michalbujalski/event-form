@@ -49,4 +49,12 @@ describe("event service", () => {
       expect(error).toBe(JSON.stringify(mockError));
     }
   });
+  it("returns all events", async () => {
+    // given
+    mocked(repository.getAllEvents).mockImplementation(() => Promise.resolve([]));
+    // when
+    await service.getAllEvents();
+    // then
+    expect(repository.getAllEvents).toBeCalled();
+  })
 });
