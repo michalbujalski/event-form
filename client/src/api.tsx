@@ -1,11 +1,13 @@
 import { EventFormData } from "./context/event-form/EventForm.models";
+import axios from "axios";
+
+const apiService = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL
+});
 
 export default {
-  createEvent: (form: EventFormData): Promise<EventFormData> => {
-    return new Promise<EventFormData>((resolve, _reject) => {
-      setTimeout(() => {
-        resolve(form);
-      }, 3000);
-    });
+  createEvent: async (form: EventFormData): Promise<EventFormData> => {
+    const response = await apiService.post("/events/create",form);
+    return response.data;
   },
 };
