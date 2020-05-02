@@ -1,5 +1,10 @@
+import dotEnv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
+
+dotEnv.config();
+
 import eventRoutes from "./events/routes";
 
 export const app = express();
@@ -14,11 +19,17 @@ const loggerMiddleware = (
 };
 
 function errorHandler(err, _req, res, _next) {
-  res.status(400).send(JSON.parse(err));
+  try {
+    const jsonError = JSON.parse(err);
+    res.status(400).send(jsonError);
+  } catch {
+    res.status(500).send(err);
+  }
 }
 
-const port = 3000;
+const port = 3001;
 app.use(bodyParser.json());
+app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: true,
