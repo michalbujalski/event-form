@@ -4,10 +4,9 @@ import { Paper, Grid, Box, Typography } from "@material-ui/core";
 
 interface EventDetailsProps {
   event: EventDetailsData;
-  isLoading: boolean;
 }
 
-const EventDetails: FC<EventDetailsProps> = ({ event, isLoading }) => {
+const EventDetails: FC<EventDetailsProps> = ({ event }) => {
   return (
     <Paper elevation={2}>
       <Box p={2}>

@@ -11,6 +11,7 @@ const EventFormPage = () => {
     const eventId = await actions.submit(state.data);
     history.replace(`/events/details/${eventId}`);
   };
+
   return (
     <Box p={2}>
       <EventForm
