@@ -5,7 +5,7 @@ import { EventFormActionsType } from "./EventForm.types";
 import api from "../../api";
 
 export interface EventFormActions {
-  submit: (eventForm: EventFormData) => Promise<void>;
+  submit: (eventForm: EventFormData) => Promise<string | undefined>;
   updateForm: (updatedForm: EventFormData) => void;
   updateTouched: (updatedTouched: EventFormTouched) => void;
 }
@@ -36,6 +36,7 @@ export const createActions = (
         type: EventFormActionsType.EVENT_FORM_SUBMIT_SUCCESS,
         payload: response,
       });
+      return response.id;
     } catch {
       dispatch({
         type: EventFormActionsType.EVENT_FORM_SUBMIT_FAILURE,

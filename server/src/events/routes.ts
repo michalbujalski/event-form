@@ -9,14 +9,22 @@ router.post("/create", async (req, res, next) => {
     const createdEvent: Event = await service.createEvent(req.body);
     res.send(createdEvent);
   } catch (err) {
-    next(err)
+    next(err);
   }
 });
 
 router.get("/", async (_req, res) => {
   const list = await service.getAllEvents();
-  console.log(list);
   res.send(list);
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const event = await service.getEvent(req.params.id);
+    res.send(event);
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

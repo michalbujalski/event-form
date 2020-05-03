@@ -2,7 +2,7 @@ import React, {
   createContext,
   useContext,
   useReducer,
-  FunctionComponent,
+  FC,
 } from "react";
 import { EventFormState, initState } from "./EventForm.models";
 import reducer from "./EventForm.reducer";
@@ -24,7 +24,7 @@ const EventFormContexImpl = createContext<EventFormContext>({
 
 export const useEventForm = () => useContext(EventFormContexImpl);
 
-export const EventFormProvider: FunctionComponent = ({ children }) => {
+export const EventFormProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const value = {
     state: { ...state },

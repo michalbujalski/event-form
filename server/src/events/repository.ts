@@ -27,11 +27,21 @@ const EventModel = mongoose.model<EventDocument>("Event", eventSchema);
 export interface EventsRepository {
   createEvent: (event: Event) => Promise<Event>;
   getAllEvents: () => Promise<Event[]>;
+  getEvent: (id: string) => Promise<Event>;
+}
+
+function convertDocToEvnet(document: EventDocument): Event {
+  return {
+    id: document._id,
+    firstName: document.firstName,
+    lastName: document.lastName,
+    email: document.email,
+    date: document.date.toISOString(),
+  };
 }
 
 export default <EventsRepository>{
   createEvent: async (event: Event) => {
-    console.log(event);
     const eventModel = new EventModel({
       firstName: event.firstName,
       lastName: event.lastName,
@@ -42,16 +52,17 @@ export default <EventsRepository>{
     event.id = saved._id;
     return event;
   },
+  getEvent: async (id: string) => {
+    if(!mongoose.Types.ObjectId.isValid(id)){
+      return null;
+    }
+    const result = await EventModel.findById(id).exec();
+    return result && convertDocToEvnet(result);
+  },
   getAllEvents: async () => {
     const results = await EventModel.find().exec();
     const events: Event[] = results.map((doc) => {
-      return <Event>{
-        id: doc._id,
-        firstName: doc.firstName,
-        lastName: doc.lastName,
-        email: doc.email,
-        date: doc.date.toISOString(),
-      };
+      return convertDocToEvnet(doc);
     });
     return events;
   },

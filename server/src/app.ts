@@ -6,6 +6,7 @@ import cors from "cors";
 dotEnv.config();
 
 import eventRoutes from "./events/routes";
+import { NotFoundError, BadRequestError } from "./errors";
 
 export const app = express();
 
@@ -19,10 +20,11 @@ const loggerMiddleware = (
 };
 
 function errorHandler(err, _req, res, _next) {
-  try {
-    const jsonError = JSON.parse(err);
-    res.status(400).send(jsonError);
-  } catch {
+  if (err instanceof NotFoundError) {
+    res.status(404).send(err);
+  } else if (err instanceof BadRequestError) {
+    res.status(400).send(err);
+  } else {
     res.status(500).send(err);
   }
 }
