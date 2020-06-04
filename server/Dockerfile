@@ -15,5 +15,5 @@ RUN yarn
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3001
 CMD [ "node", "dist/app.js" ]

@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  mongodb_container:
+  db:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: db_user
@@ -9,6 +9,32 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/eventsdb
+    networks:
+      - events-network
+  backend:
+    build: ./server
+    container_name: events-backend
+    ports:
+      - 3001:3001
+    networks:
+      - events-network
+    links:
+      - db
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    container_name: events-frontend
+    ports:
+      - 5000:5000
+    networks:
+      - events-network
+      
+networks:
+  events-network:
+    driver: bridge
 
 volumes:
   mongodb_data_container:
+  
