@@ -22,8 +22,8 @@ export const useEventDetails = () => useContext(EventDetailContexImpl);
 export const EventDetailsProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const value = {
-    state: { ...state },
-    actions: { ...createActions(dispatch) },
+    state,
+    actions: createActions(dispatch),
   };
   return (
     <EventDetailContexImpl.Provider value={value}>

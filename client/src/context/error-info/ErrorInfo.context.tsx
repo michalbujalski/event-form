@@ -36,7 +36,7 @@ export const ErrorInfoProvider: FC = ({ children }) => {
   });
 
   const value = {
-    state: { ...state },
+    state,
     actions: {
       setIsOpen: (message: string) => {
         setState({ ...state, isOpen: true, message: message });
